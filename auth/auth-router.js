@@ -7,10 +7,10 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 // ------------------------------------------------|
 // bring in web tokens ----------------------------|
-const jwt = require('json')
+const jwt = require('jsonwebtoken')
 // ------------------------------------------------|
 // bring in db helpers ----------------------------|
-const Users = require('./users-model.js')
+const Users = require('../users/users-model.js')
 // ------------------------------------------------|
 // bring in restricted middleware -----------------|
 const restricted = require('../auth/restricted-middleware.js')
