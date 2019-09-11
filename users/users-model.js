@@ -5,13 +5,23 @@ const db = require('../data/dbConfig.js')
 // ------------------------------------------------|
 // DEFINE HELPER METHODS ==========================|
 // ================================================|
-const find = () => {}
+const add = async user => {
+  const [id] = await db('users').insert(user)
+  return findById(id)
+}
 // ------------------------------------------------|
-const findBy = filter => {}
+const find = () => db('users').select('id', 'username', 'department')
 // ------------------------------------------------|
-const add = user => {}
+const findBy = filter =>
+  db('users')
+    .select('id', 'username', 'department')
+    .where(filter)
 // ------------------------------------------------|
-const findById = id => {}
+const findById = id =>
+  db('users')
+    .select('id', 'username', 'department')
+    .where({ id })
+    .first()
 // ------------------------------------------------|
 // EXPORT =========================================|
 // ================================================|
