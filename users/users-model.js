@@ -12,10 +12,7 @@ const add = async user => {
 // ------------------------------------------------|
 const find = () => db('users').select('id', 'username', 'department')
 // ------------------------------------------------|
-const findBy = filter =>
-  db('users')
-    .select('id', 'username', 'department')
-    .where(filter)
+const findBy = filter => db('users').where(filter)
 // ------------------------------------------------|
 const findById = id =>
   db('users')

@@ -17,6 +17,9 @@ const restricted = require('../auth/restricted-middleware.js')
 // ------------------------------------------------|
 // DEFINE ENDPOINTS ===============================|
 // ================================================|
+// Auth route base url - '/api/auth' --------------|
+// ------------------------------------------------|
+// POST Request adds a new user to the database ---|
 router.post('/register', (req, res) => {
   let user = req.body
 
@@ -45,6 +48,31 @@ router.post('/register', (req, res) => {
     })
     .catch(err => {
       console.log(err)
+      res.status(500).json(err)
+    })
+})
+// ------------------------------------------------|
+router.post('/login', (req, res) => {
+  let { username, password } = req.body
+
+  Users.findBy({ username })
+    .first()
+    .then(user => {
+      // verify user
+      if (user && bcrypt.compareSync(password, user.password)) {
+        // if password lines up generate token
+        const token = generateToken(user)
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          token
+        })
+      } else {
+        res.status(401).json({
+          message: 'Invalid Credentials'
+        })
+      }
+    })
+    .catch(err => {
       res.status(500).json(err)
     })
 })
